@@ -58,3 +58,11 @@ If you use a different `BASE` folder, updated the `Makefile`s accordingly.
 
 These programs were tested with CodePlay's [ComputeCpp Community Edition](https://developer.codeplay.com/products/computecpp/ce/home/),
 version 1.1.3 .
+
+
+## Other projects
+
+Other projects with similar goals:
+  - BabelStream memory transfer benchmark: https://uob-hpc.github.io/BabelStream/
+  - Parallel Research Tools: https://github.com/ParRes/Kernels
+  - DoE portability study: https://performanceportability.org/
