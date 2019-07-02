@@ -21,10 +21,10 @@ SYCL_HOST   := -DSYCL_TARGET_HOST
 # Alpaka/Cupla configuration
 ALPAKA_BASE := /opt/alpaka/alpaka
 CUPLA_BASE  := /opt/alpaka/cupla
-CUPLA_FLAGS := -I$(ALPAKA_BASE)/include -I$(CUPLA_BASE)/include
+CUPLA_FLAGS := -I$(ALPAKA_BASE)/include -I$(CUPLA_BASE)/include -pthread
 CUPLA_CUDA_ASYNC     := -DCUPLA_STREAM_ASYNC_ENABLED=1 -include "cupla/standalone/GpuCudaRt.hpp"
 CUPLA_HOST_SYNC      := -DCUPLA_STREAM_ASYNC_ENABLED=0 -include "cupla/standalone/CpuSerial.hpp"
-CUPLA_HOST_TBB_ASYNC := -DCUPLA_STREAM_ASYNC_ENABLED=1 -include "cupla/standalone/CpuTbbBlocks.hpp" -pthread -ltbb
+CUPLA_HOST_TBB_ASYNC := -DCUPLA_STREAM_ASYNC_ENABLED=1 -include "cupla/standalone/CpuTbbBlocks.hpp" -ltbb
 
 all: $(TARGETS)
 
