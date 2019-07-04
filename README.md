@@ -8,6 +8,7 @@ The purpose of these test programs is to experiment with various heterogeneous f
 |---------------|---------------|-------|---------------|-------|
 | `vector_add`  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: :heavy_check_mark: :heavy_check_mark: :heavy_check_mark: | :heavy_check_mark: :heavy_check_mark: :heavy_check_mark: |
 | `shared_mem`  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: :heavy_check_mark: :heavy_check_mark: :heavy_check_mark: | :heavy_check_mark: :heavy_check_mark: :heavy_check_mark: |
+| `eigen_test`  | :x: | :x: | :heavy_check_mark: :x: :x: :heavy_check_mark: | :x: :x: :x: |
 
 Support for **Alpaka/Cupla** is split in
   - CPU serial
