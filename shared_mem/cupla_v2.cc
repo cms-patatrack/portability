@@ -68,4 +68,7 @@ int main() {
   cudaMemcpy(&counter, counter_d, sizeof(int), cudaMemcpyDeviceToHost);
 
   std::cout << counter << std::endl;
+
+  cudaFree(counter_d);
+  cudaFree(data_d);
 }

@@ -81,4 +81,9 @@ int main() {
 #endif
 
   std::cout << counter << std::endl;
+
+#ifdef ALPAKA_ACC_GPU_CUDA_ENABLED
+  cudaFree(counter_d);
+  cudaFree(data_d);
+#endif
 }
