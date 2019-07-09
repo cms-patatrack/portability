@@ -13,9 +13,11 @@ CUDA_CXX    := $(CUDA_BASE)/bin/nvcc
 # SYCL configuration
 SYCL_BASE   := /opt/ComputeCpp
 SYCL_CXX    := $(SYCL_BASE)/bin/compute++
+SYCL_INFO   := $(SYCL_BASE)/bin/computecpp_info
 SYCL_FLAGS  := -sycl-driver -no-serial-memop -O2 -std=c++17 -g -I$(SYCL_BASE)/include -L$(SYCL_BASE)/lib -lComputeCpp
-SYCL_CUDA   := -sycl-target ptx64 -DSYCL_TARGET_PTX -DSYCL_WORKAROUND_WORK_ITEM_LOOP_BUG --cuda-path=$(CUDA_BASE)
-SYCL_SPIR   := -sycl-target spir64 -DSYCL_TARGET_SPIR -DSYCL_WORKAROUND_WORK_ITEM_LOOP_BUG
+SYCL_FLAGS  := $(SYCL_FLAGS) $(shell { $(SYCL_INFO) --dump-version | awk '{ print $$2 }'; echo '1.1.3 -DSYCL_WORKAROUND_WORK_ITEM_LOOP_BUG'; } | sort -h -r | head -n1 | awk '{ print $$2 }')
+SYCL_CUDA   := -sycl-target ptx64 -DSYCL_TARGET_PTX --cuda-path=$(CUDA_BASE)
+SYCL_SPIR   := -sycl-target spir64 -DSYCL_TARGET_SPIR
 SYCL_HOST   := -DSYCL_TARGET_HOST
 
 # Alpaka/Cupla configuration

@@ -13,18 +13,20 @@ CUDA_CXX    := $(CUDA_BASE)/bin/nvcc
 # SYCL configuration
 SYCL_BASE   := /opt/ComputeCpp
 SYCL_CXX    := $(SYCL_BASE)/bin/compute++
+SYCL_INFO   := $(SYCL_BASE)/bin/computecpp_info
 SYCL_FLAGS  := -sycl-driver -no-serial-memop -O2 -std=c++17 -g -I$(SYCL_BASE)/include -L$(SYCL_BASE)/lib -lComputeCpp
-SYCL_CUDA   := -sycl-target ptx64 -DSYCL_TARGET_PTX -DSYCL_WORKAROUND_WORK_ITEM_LOOP_BUG --cuda-path=$(CUDA_BASE)
-SYCL_SPIR   := -sycl-target spir64 -DSYCL_TARGET_SPIR -DSYCL_WORKAROUND_WORK_ITEM_LOOP_BUG
+SYCL_FLAGS  := $(SYCL_FLAGS) $(shell { $(SYCL_INFO) --dump-version | awk '{ print $$2 }'; echo '1.1.3 -DSYCL_WORKAROUND_WORK_ITEM_LOOP_BUG'; } | sort -h -r | head -n1 | awk '{ print $$2 }')
+SYCL_CUDA   := -sycl-target ptx64 -DSYCL_TARGET_PTX --cuda-path=$(CUDA_BASE)
+SYCL_SPIR   := -sycl-target spir64 -DSYCL_TARGET_SPIR
 SYCL_HOST   := -DSYCL_TARGET_HOST
 
 # Alpaka/Cupla configuration
 ALPAKA_BASE := /opt/alpaka/alpaka
 CUPLA_BASE  := /opt/alpaka/cupla
-CUPLA_FLAGS := -I$(ALPAKA_BASE)/include -I$(CUPLA_BASE)/include
+CUPLA_FLAGS := -I$(ALPAKA_BASE)/include -I$(CUPLA_BASE)/include -pthread
 CUPLA_CUDA_ASYNC     := -DCUPLA_STREAM_ASYNC_ENABLED=1 -include "cupla/standalone/GpuCudaRt.hpp"
 CUPLA_HOST_SYNC      := -DCUPLA_STREAM_ASYNC_ENABLED=0 -include "cupla/standalone/CpuSerial.hpp"
-CUPLA_HOST_TBB_ASYNC := -DCUPLA_STREAM_ASYNC_ENABLED=1 -include "cupla/standalone/CpuTbbBlocks.hpp" -pthread -ltbb
+CUPLA_HOST_TBB_ASYNC := -DCUPLA_STREAM_ASYNC_ENABLED=1 -include "cupla/standalone/CpuTbbBlocks.hpp" -ltbb
 
 all: $(TARGETS)
 
