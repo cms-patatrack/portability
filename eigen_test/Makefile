@@ -11,7 +11,7 @@ EIGEN_FLAGS := -I$(EIGEN_BASE)/include/eigen3 -DEIGEN_DONT_PARALLELIZE
 
 # CUDA configuration
 CUDA_BASE   := /usr/local/cuda-10.1
-CUDA_FLAGS  := -x cu -std=c++14 -O2 -g -w --expt-relaxed-constexpr --compiler-options "-pthread"
+CUDA_FLAGS  := -x cu -std=c++14 -O2 -g -w --expt-relaxed-constexpr --compiler-options "-pthread" -D FOR_CUDA
 CUDA_CXX    := $(CUDA_BASE)/bin/nvcc
 
 # Alpaka/Cupla configuration
