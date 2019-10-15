@@ -1,7 +1,6 @@
 #ifndef sycl_common_h
 #define sycl_common_h
 
-#include <optional>
 #include <SYCL/sycl.hpp>
 
 // Adapted from computecpp-sdk/samples/custom-device-selector/custom-device-selector.cpp

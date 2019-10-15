@@ -2,8 +2,11 @@
 
 TARGETS := test-cuda test-cupla-ptx test-cupla-host test-cupla-tbb test-sycl-spir test-sycl-ptx test-sycl-host
 
-CXX         := /usr/bin/g++-8
+CXX         := g++
 CXXFLAGS    := -std=c++14 -O2 -g
+
+# boost
+BOOST_FLAGS := -I/usr/include/boost169 -L/usr/lib64/boost169
 
 # CUDA configuration
 CUDA_BASE   := /usr/local/cuda-10.1
@@ -11,7 +14,7 @@ CUDA_FLAGS  := -x cu -std=c++14 -O2 -g -w --expt-relaxed-constexpr
 CUDA_CXX    := $(CUDA_BASE)/bin/nvcc
 
 # SYCL configuration
-SYCL_BASE   := /opt/ComputeCpp
+SYCL_BASE   := /opt/codeplay/latest
 SYCL_CXX    := $(SYCL_BASE)/bin/compute++
 SYCL_INFO   := $(SYCL_BASE)/bin/computecpp_info
 SYCL_FLAGS  := -sycl-driver -no-serial-memop -O2 -std=c++17 -g -I$(SYCL_BASE)/include -L$(SYCL_BASE)/lib -lComputeCpp
@@ -23,10 +26,10 @@ SYCL_HOST   := -DSYCL_TARGET_HOST
 # Alpaka/Cupla configuration
 ALPAKA_BASE := /opt/alpaka/alpaka
 CUPLA_BASE  := /opt/alpaka/cupla
-CUPLA_FLAGS := -I$(ALPAKA_BASE)/include -I$(CUPLA_BASE)/include -pthread
-CUPLA_CUDA_ASYNC     := -DCUPLA_STREAM_ASYNC_ENABLED=1 -include "cupla/standalone/GpuCudaRt.hpp"
-CUPLA_HOST_SYNC      := -DCUPLA_STREAM_ASYNC_ENABLED=0 -include "cupla/standalone/CpuSerial.hpp"
-CUPLA_HOST_TBB_ASYNC := -DCUPLA_STREAM_ASYNC_ENABLED=1 -include "cupla/standalone/CpuTbbBlocks.hpp" -ltbb
+CUPLA_FLAGS := $(BOOST_FLAGS) -I$(ALPAKA_BASE)/include -I$(CUPLA_BASE)/include
+CUPLA_CUDA_ASYNC     := -DCUPLA_STREAM_ASYNC_ENABLED=1 -include "cupla/config/GpuCudaRt.hpp"
+CUPLA_HOST_SYNC      := -DCUPLA_STREAM_ASYNC_ENABLED=0 -include "cupla/config/CpuSerial.hpp" -pthread
+CUPLA_HOST_TBB_ASYNC := -DCUPLA_STREAM_ASYNC_ENABLED=1 -include "cupla/config/CpuTbbBlocks.hpp" -ltbb -pthread
 
 all: $(TARGETS)
 
